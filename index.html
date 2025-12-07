@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meoux Meoux</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="room">
+        <!-- Window -->
+        <div class="window" id="window">
+            <div class="window-view" id="windowView">
+                <div class="sunset-sun" id="sunsetSun">
+                    <div class="sun-ray"></div>
+                    <div class="sun-ray"></div>
+                    <div class="sun-ray"></div>
+                    <div class="sun-ray"></div>
+                    <div class="sun-ray"></div>
+                    <div class="sun-ray"></div>
+                    <div class="sun-ray"></div>
+                    <div class="sunset-sun-circle"></div>
+                </div>
+                <div class="cloud cloud-1" id="cloud1"></div>
+                <div class="cloud cloud-2" id="cloud2"></div>
+                <div class="stars" id="stars">
+                    <div class="star"></div>
+                    <div class="star"></div>
+                    <div class="star"></div>
+                    <div class="star"></div>
+                    <div class="star"></div>
+                </div>
+            </div>
+            <div class="window-frame"></div>
+        </div>
+        
+        <!-- Standing Lamp -->
+        <div class="lamp" id="lamp">
+            <div class="lamp-base"></div>
+            <div class="lamp-pole"></div>
+            <div class="lamp-shade" id="lampShade"></div>
+        </div>
+
+        <!-- Portrait -->
+        <div class="portrait">
+            <div class="portrait-frame">
+                <img src="mogo.jpeg" alt="Mogo" class="portrait-image">
+            </div>
+        </div>
+
+        <!-- Sofa -->
+        <div class="sofa">
+            <div class="sofa-back"></div>
+            <div class="sofa-seat"></div>
+            <div class="sofa-arm-left"></div>
+            <div class="sofa-arm-right"></div>
+        </div>
+        
+        <!-- Cat Food Bowl -->
+        <div class="food-bowl" id="foodBowl">
+            <div class="bowl-base"></div>
+            <div class="food-content" id="foodContent"></div>
+        </div>
+        
+        <!-- Floor -->
+        <div class="floor" id="floor">
+            <div class="paw-marks" id="pawMarks">
+                <!-- Paw prints will be dynamically generated -->
+            </div>
+            <div class="spilled-food" id="spilledFood">
+                <!-- Food bits will be dynamically generated -->
+            </div>
+        </div>
+
+        <!-- Broom -->
+        <div class="broom" id="broom">
+            <div class="broom-handle"></div>
+            <div class="broom-bristles"></div>
+        </div>
+        
+        <!-- Cat -->
+        <!-- <script src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.8.5/dist/dotlottie-wc.js" type="module"></script>
+        <dotlottie-wc src="https://lottie.host/44b735c5-4892-494c-8830-4b1334573eb5/qzJVWFTVTd.lottie" style="position:absolute; right:50%; bottom:25%; width: 300px; height: 300px" autoplay loop></dotlottie-wc> -->
+        <div class="cat" id="cat">
+            <div class="cat-body">
+                <div class="cat-head">
+                    <div class="cat-ears">
+                        <div class="ear left"></div>
+                        <div class="ear right"></div>
+                    </div>
+                    <div class="cat-face">
+                        <div class="cat-eyes">
+                            <div class="eye left" id="leftEye">
+                                <div class="pupil"></div>
+                            </div>
+                            <div class="eye right" id="rightEye">
+                                <div class="pupil"></div>
+                            </div>
+                        </div>
+                        <div class="cat-nose"></div>
+                        <div class="cat-mouth">
+                            <div class="tongue" id="tongue"></div>
+                        </div>
+                    </div>
+                    <div class="cat-collar"></div>
+                </div>
+                <div class="cat-torso"></div>
+                <div class="cat-legs">
+                    <div class="leg front-left"></div>
+                    <div class="leg front-right"></div>
+                    <div class="leg back-left"></div>
+                    <div class="leg back-right"></div>
+                </div>
+                <div class="cat-tail"></div>
+            </div>
+        </div>
+        
+        <!-- Speech Bubble -->
+        <div class="speech-bubble" id="speechBubble">
+            <div class="speech-text" id="speechText"></div>
+            <div class="speech-tail"></div>
+        </div>
+    </div>
+    
+    <script src="app.js"></script>
+</body>
+</html>
