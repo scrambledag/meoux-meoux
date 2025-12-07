@@ -968,13 +968,13 @@ body {
     }
 
     .window-frame::before {
-        height: 250px;
+        height: 200px;
     }
 
     /* Portrait adjustments */
     .portrait {
-        top: 8%;
-        left: 50%;
+        top: 0%;
+        left: 20%;
     }
 
     .portrait-image {
@@ -1006,8 +1006,8 @@ body {
     .sofa {
         width: 250px;
         height: 200px;
-        bottom: 20%;
-        left: 50%;
+        /* bottom: 20%; */
+        left: 40%;
     }
 
     .sofa-back {
@@ -1065,7 +1065,7 @@ body {
     }
 
     .cat-face {
-        bottom: 35%
+        bottom: 45%
         width: 55px;
         height: 50px;
     }
