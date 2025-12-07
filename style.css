@@ -1065,9 +1065,22 @@ body {
     }
 
     .cat-face {
-        bottom: 45%
+        top:10px;
         width: 55px;
         height: 50px;
+    }
+
+    .cat-nose {
+        top: 10px;
+    }
+    
+    .cat-mouth {
+        top: 13px
+    }
+    
+    
+    .tongue {
+        top: 15px
     }
 
     .cat-torso {
