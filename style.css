@@ -974,7 +974,7 @@ body {
     /* Portrait adjustments */
     .portrait {
         top: 0%;
-        left: 20%;
+        left: 40%;
     }
 
     .portrait-image {
@@ -1005,8 +1005,8 @@ body {
     /* Sofa adjustments */
     .sofa {
         width: 250px;
-        height: 200px;
-        /* bottom: 20%; */
+        height: 180px;
+        top: 20px;
         left: 40%;
     }
 
