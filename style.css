@@ -973,7 +973,7 @@ body {
 
     /* Portrait adjustments */
     .portrait {
-        top: 5%;
+        top: 3%;
         left: 40%;
     }
 
@@ -1071,16 +1071,16 @@ body {
     }
 
     .cat-nose {
-        top:15px;
+        top:20px;
     }
     
     .cat-mouth {
-        top: 17px
+        top: 25px
     }
     
     
     .tongue {
-        top: 18px
+        top: 8px
     }
 
     .cat-torso {
