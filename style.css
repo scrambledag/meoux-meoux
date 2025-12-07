@@ -961,8 +961,8 @@ body {
 @media screen and (max-width: 768px) {
     /* Window adjustments */
     .window {
-        width: 200px;
-        height: 250px;
+        width: 175px;
+        height: 200px;
         top: 5%;
         right: 5%;
     }
@@ -978,8 +978,8 @@ body {
     }
 
     .portrait-image {
-        width: 100px;
-        height: 125px;
+        width: 75px;
+        height: 100px;
     }
 
     .portrait-frame {
@@ -1004,9 +1004,9 @@ body {
 
     /* Sofa adjustments */
     .sofa {
-        width: 350px;
+        width: 250px;
         height: 200px;
-        bottom: 25%;
+        bottom: 20%;
         left: 50%;
     }
 
@@ -1065,6 +1065,7 @@ body {
     }
 
     .cat-face {
+        bottom: 35%
         width: 55px;
         height: 50px;
     }
