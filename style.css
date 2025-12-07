@@ -956,3 +956,436 @@ body {
 .room.dark {
     background-color: #cc7a99;
 }
+
+/* Mobile Responsive Layout */
+@media screen and (max-width: 768px) {
+    /* Window adjustments */
+    .window {
+        width: 200px;
+        height: 250px;
+        top: 5%;
+        right: 5%;
+    }
+
+    .window-frame::before {
+        height: 250px;
+    }
+
+    /* Portrait adjustments */
+    .portrait {
+        top: 8%;
+        left: 50%;
+    }
+
+    .portrait-image {
+        width: 100px;
+        height: 125px;
+    }
+
+    .portrait-frame {
+        padding: 10px;
+    }
+
+    /* Lamp adjustments */
+    .lamp {
+        left: 10%;
+        bottom: 30%;
+    }
+
+    .lamp-pole {
+        height: 120px;
+    }
+
+    .lamp-shade {
+        bottom: 130px;
+        width: 50px;
+        height: 35px;
+    }
+
+    /* Sofa adjustments */
+    .sofa {
+        width: 350px;
+        height: 200px;
+        bottom: 25%;
+        left: 50%;
+    }
+
+    .sofa-back {
+        height: 70px;
+    }
+
+    .sofa-seat {
+        top: 70px;
+        height: 60px;
+    }
+
+    .sofa-arm-left,
+    .sofa-arm-right {
+        width: 30px;
+        height: 130px;
+    }
+
+    .sofa-arm-left {
+        left: -30px;
+    }
+
+    .sofa-arm-right {
+        right: -30px;
+    }
+
+    /* Food bowl adjustments */
+    .food-bowl {
+        width: 60px;
+        height: 30px;
+        bottom: 28%;
+        right: 15%;
+    }
+
+    .bowl-base {
+        height: 25px;
+    }
+
+    .food-content {
+        height: 20px;
+    }
+
+    .food-content.half {
+        height: 10px;
+    }
+
+    /* Cat adjustments */
+    .cat {
+        width: 100px;
+        height: 100px;
+    }
+
+    .cat-head {
+        width: 65px;
+        height: 65px;
+    }
+
+    .cat-face {
+        width: 55px;
+        height: 50px;
+    }
+
+    .cat-torso {
+        width: 50px;
+        height: 40px;
+        top: 50px;
+    }
+
+    .cat-legs {
+        top: 85px;
+        width: 65px;
+    }
+
+    .leg {
+        width: 12px;
+        height: 20px;
+    }
+
+    .cat-tail {
+        height: 25px;
+        top: 60px;
+    }
+
+    .cat.interacting {
+        transform: translateX(-50%) translateY(-30px) scale(1.3);
+        bottom: 45%;
+    }
+
+    .cat.rest,
+    .cat.sleep {
+        bottom: 38%;
+    }
+
+    /* Broom adjustments */
+    .broom {
+        width: 12px;
+        height: 90px;
+        left: 8%;
+        bottom: 28%;
+    }
+
+    .broom-handle {
+        width: 6px;
+        height: 70px;
+    }
+
+    .broom-bristles {
+        width: 20px;
+        height: 25px;
+    }
+
+    /* Speech bubble adjustments */
+    .speech-bubble {
+        top: 10%;
+        max-width: 250px;
+        padding: 12px 15px;
+    }
+
+    .speech-text {
+        font-size: 14px;
+    }
+
+    /* Paw prints and food adjustments */
+    .paw-print {
+        width: 25px;
+        height: 25px;
+    }
+
+    .paw-pad {
+        width: 16px;
+        height: 20px;
+    }
+
+    .paw-toe {
+        width: 6px;
+        height: 6px;
+    }
+
+    .food-bit {
+        width: 6px;
+        height: 6px;
+    }
+
+    /* Cloud adjustments */
+    .cloud-1 {
+        width: 40px;
+        height: 16px;
+    }
+
+    .cloud-1::before {
+        width: 24px;
+        height: 24px;
+    }
+
+    .cloud-1::after {
+        width: 20px;
+        height: 20px;
+    }
+
+    .cloud-2 {
+        width: 50px;
+        height: 20px;
+    }
+
+    .cloud-2::before {
+        width: 28px;
+        height: 28px;
+    }
+
+    .cloud-2::after {
+        width: 24px;
+        height: 24px;
+    }
+
+    /* Sun adjustments */
+    .sunset-sun {
+        width: 80px;
+        height: 40px;
+    }
+
+    .sunset-sun-circle {
+        width: 80px;
+        height: 80px;
+    }
+
+    /* Star adjustments */
+    .star {
+        width: 2px;
+        height: 2px;
+    }
+}
+
+/* Extra small phones */
+@media screen and (max-width: 480px) {
+    /* Window */
+    .window {
+        width: 150px;
+        height: 200px;
+        top: 3%;
+        right: 3%;
+    }
+
+    .window-frame::before {
+        height: 200px;
+    }
+
+    /* Portrait */
+    .portrait {
+        top: 5%;
+    }
+
+    .portrait-image {
+        width: 80px;
+        height: 100px;
+    }
+
+    .portrait-frame {
+        padding: 8px;
+    }
+
+    /* Lamp */
+    .lamp {
+        left: 5%;
+        bottom: 30%;
+    }
+
+    .lamp-pole {
+        height: 100px;
+    }
+
+    .lamp-shade {
+        bottom: 110px;
+        width: 40px;
+        height: 30px;
+    }
+
+    /* Sofa */
+    .sofa {
+        width: 280px;
+        height: 160px;
+        bottom: 28%;
+    }
+
+    .sofa-back {
+        height: 60px;
+    }
+
+    .sofa-seat {
+        top: 60px;
+        height: 50px;
+    }
+
+    .sofa-arm-left,
+    .sofa-arm-right {
+        width: 25px;
+        height: 110px;
+    }
+
+    .sofa-arm-left {
+        left: -25px;
+    }
+
+    .sofa-arm-right {
+        right: -25px;
+    }
+
+    /* Food bowl */
+    .food-bowl {
+        width: 50px;
+        height: 25px;
+        right: 10%;
+    }
+
+    /* Cat */
+    .cat {
+        width: 80px;
+        height: 80px;
+    }
+
+    .cat-head {
+        width: 55px;
+        height: 55px;
+    }
+
+    .cat-face {
+        width: 45px;
+        height: 40px;
+    }
+
+    .cat-torso {
+        width: 40px;
+        height: 35px;
+        top: 42px;
+    }
+
+    .cat-legs {
+        top: 70px;
+        width: 55px;
+    }
+
+    .leg {
+        width: 10px;
+        height: 18px;
+    }
+
+    .cat-tail {
+        height: 22px;
+        top: 50px;
+        width: 6px;
+    }
+
+    .cat-collar {
+        width: 50px;
+    }
+
+    .eye {
+        width: 15px;
+        height: 15px;
+    }
+
+    .pupil {
+        width: 6px;
+        height: 6px;
+    }
+
+    .tongue {
+        width: 8px;
+        height: 6px;
+    }
+
+    /* Broom */
+    .broom {
+        width: 10px;
+        height: 75px;
+        left: 5%;
+    }
+
+    .broom-handle {
+        width: 5px;
+        height: 55px;
+    }
+
+    .broom-bristles {
+        width: 18px;
+        height: 20px;
+    }
+
+    /* Speech bubble */
+    .speech-bubble {
+        max-width: 200px;
+        padding: 10px 12px;
+        top: 8%;
+    }
+
+    .speech-text {
+        font-size: 12px;
+    }
+
+    /* Animation adjustments for mobile */
+    @keyframes moveAround {
+        0%, 100% {
+            left: 15%;
+            bottom: 32%;
+        }
+        25% {
+            left: 55%;
+            bottom: 35%;
+        }
+        50% {
+            left: 35%;
+            bottom: 30%;
+        }
+        75% {
+            left: 75%;
+            bottom: 33%;
+        }
+    }
+
+    .cat.interacting {
+        transform: translateX(-50%) translateY(-25px) scale(1.2);
+    }
+}
