@@ -1,8 +1,8 @@
 // Time slot configuration (IST)
 const TIME_SLOTS = [
     { start: 6, end: 10 },   // Slot 1: 06:00-10:00
-    { start: 10, end: 16 },  // Slot 2: 10:00-16:00
-    { start: 16, end: 19 },  // Slot 3: 16:00-19:00
+    { start: 10, end: 17 },  // Slot 2: 10:00-16:00
+    { start: 17, end: 19 },  // Slot 3: 16:00-19:00
     { start: 19, end: 22 },  // Slot 4: 19:00-22:00
     { start: 22, end: 6 }    // Slot 5: 22:00-06:00 (wraps around)
 ];
@@ -160,6 +160,7 @@ function updateScenery(slot) {
         room.classList.add('bright');
         windowView.classList.add('sunny');
         foodContent.classList.add('full');
+        lampShade.classList.add('day');
         // Show clouds for sunny view
         if (cloud1) cloud1.style.display = 'block';
         if (cloud2) cloud2.style.display = 'block';
@@ -292,13 +293,13 @@ function handleClick(event) {
         setTimeout(() => {
             cat.classList.remove('interacting');
             cat.classList.add('active');
-        }, 2000);
+        }, 5000);
     } else if (slot === 3 || slot === 4) {
         // Come front and center
         cat.classList.add('interacting');
         setTimeout(() => {
             cat.classList.remove('interacting');
-        }, 2000);
+        }, 5000);
     } else {
         // Slot 5: Don't move, just meow
         // Cat stays in sleep mode

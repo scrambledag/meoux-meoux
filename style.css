@@ -376,6 +376,11 @@ body {
     background-color: #808080;
 }
 
+.lamp-shade.day {
+    opacity: 1;
+    background-color: #c8c6c6;
+}
+
 /* Portrait */
 .portrait {
     position: absolute;
@@ -845,10 +850,10 @@ body {
 
 @keyframes spin {
     from {
-        transform: rotate(0deg);
+        transform: rotateY(0deg);
     }
     to {
-        transform: rotate(360deg);
+        transform: rotateY(360deg);
     }
 }
 
@@ -1078,6 +1083,7 @@ body {
     .eye.right {
         right: 5px;
         transform: rotate(10deg);
+    }
 
     .cat-nose {
         top:20px;
