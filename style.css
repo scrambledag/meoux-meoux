@@ -1070,6 +1070,15 @@ body {
         height: 50px;
     }
 
+    .eye.left {
+        left: 5px;
+        transform: rotate(-10deg);
+    }
+    
+    .eye.right {
+        right: 5px;
+        transform: rotate(10deg);
+
     .cat-nose {
         top:20px;
     }
