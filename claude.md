@@ -179,3 +179,79 @@ Responsive Design Implementation -
    - CSS-only responsive design using media queries
    - No JavaScript changes required - all interactions work seamlessly on mobile
    - Proportional scaling maintains visual consistency across all device sizes
+
+====================================== Version 3.1 - Randomized and trigger based cat animation and scene change =======================================
+
+1. Remove the slot based triggers for the food bowl, the spilt food and the paw prints. Use the following triggers -
+    - If user fills food bowl, it should be half filled in the next slot and empty in the slot after that. Once empty, it should stay empty till the user fills it again.
+    - If floor is clean and food bowl is empty then no new paw prints or spilt food should appear on the floor till the next time the food bowl is half full or empty.
+    - If the cat is in sleep mode then no new paw prints or spilt food should appear till its mode changes.
+
+2. Add 2 new cat modes - 
+    - Hangry - the cat has angry eyebrows, jumps up and down rapidly, and when the user clicks, only the following dialogue appears - "FEED ME BISH" with the 'meow_sound.mp3' playing. This mode is triggered when the food bowl is empty for 2 slots consecutively. Once user fills food bowl again, the hangry mode should switch to active.
+    - Surprise - use the animation that is currently used for active mode (spin). Play the 'oiia-oiia-sound.mp3' file while this mode is on. Switch to active mode after 10 seconds of surprise mode.
+
+3. Modify the active mode animation as follows -
+    - When mode is active, cat has the sway animation and says "Play with me!" with 'meow_sound.mp3'. 
+    - When user clicks on the screen, the cat will move towards the click. If user clicks on the cat, the cat starts spinning around and keeps spinning till the click stops.
+
+4. Add randomness to cat animation by assigning probabilities as follows -
+    - In slot 1 - p(active) = 0.3, p(rest) = 0.6, p(surprise) = 0.1
+    - In slot 2 - p(active) = 0.3, p(rest) = 0.5, p(surprise) = 0.2
+    - In slot 3 - p(active) = 0.3, p(rest) = 0.5, p(surprise) = 0.2
+    - In slot 4 - p(active) = 0.3, p(rest) = 0.4, p(sleep) = 0.1
+    - In slot 5 - p(active) = 0.1, p(rest) = 0.1, p(sleep) = 0.8
+
+    The hangry mode, if triggered, overrides all of these. If user clicks, trigger the respective slot dialogue with probability of 0.9 and trigger surprise mode with probability of 0.1.
+
+
+====================================== Version 3.2 - Bug fixes and font change =======================================
+
+1. If cat is in surprise mode, revert back to its previous mode after the surprise mode timeout instead of defaulting to active mode.
+2. Make the dialogue bubble appear above the position of the cat instead of keeping it static
+3. Change the text font to comic sans
+4. Add the name "Meoux Meoux" on the food bowl
+5. When the cat is in active mode and moves towards the click, make the motion slower and make the cat sway while moving to give the effect of walking.
+
+====================================== Summary of Implementation =======================================
+
+Version 3.2 Completed (Latest):
+- Previous mode restoration: Cat returns to its previous mode (active/rest/sleep) after surprise mode timeout
+- Dynamic dialogue positioning: Speech bubble follows cat's position and appears above it
+- Font styling: Changed to Comic Sans MS for playful appearance
+- Bowl name label: "Meoux Meoux" text added to food bowl (commented out in HTML)
+- Walking animation: Cat movement slowed to 2s with sway/bounce effect for natural walking
+
+Version 3.1 Completed:
+- State-based food bowl system: Bowl transitions full → half → empty over time slots
+- Trigger-based floor mess: Paw prints and spilt food appear based on bowl state and cat mode
+- Hangry mode: Angry eyebrows with jumping animation when bowl empty for 2+ slots
+- Surprise mode: Spinning animation with sound, 6-second duration
+- Active mode enhancement: Sway animation with "Play with me!" dialogue
+- Interactive features: Cat follows clicks, spins when clicked and held
+- Probabilistic mode selection: Different mode probabilities for each time slot
+- Click interaction: 90% dialogue, 10% surprise mode trigger
+
+Version 2.2 Completed:
+- Mobile responsive design with breakpoints at 768px and 480px
+- All elements scaled proportionally for tablet and phone screens
+- Touch-friendly interaction targets maintained
+
+Version 2.1 Completed:
+- Interactive broom for cleaning floor
+- Interactive food bowl filling
+- Tail sway animation
+
+Version 1.3 Completed:
+- Twinkling stars for night scene
+- Portrait with framed photograph
+- Slot-specific sound effects
+
+Core Features:
+- Time-based slot system (IST timezone)
+- Cat with cross-eyed look and tongue sticking out
+- Multiple cat modes with animations
+- Dynamic scenery changes
+- Speech bubble dialogues
+- Interactive elements (broom, food bowl)
+- Sound effects

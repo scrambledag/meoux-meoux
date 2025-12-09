@@ -6,7 +6,7 @@
 
 body {
     overflow: hidden;
-    font-family: Arial, sans-serif;
+    font-family: 'Comic Sans MS', 'Comic Sans', cursive, sans-serif;
 }
 
 .room {
@@ -559,6 +559,19 @@ body {
     height: 0;
 }
 
+.bowl-name {
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 10px;
+    font-weight: bold;
+    color: #404040;
+    text-align: center;
+    pointer-events: none;
+    z-index: 10;
+}
+
 /* Cat */
 .cat {
     position: absolute;
@@ -806,11 +819,49 @@ body {
 
 /* Cat Animations */
 .cat.active {
-    animation: moveAround 10s ease-in-out infinite;
+    animation: sway 2s ease-in-out infinite;
+    bottom: 35%;
+    transition: left 2s ease, bottom 2s ease;
 }
 
-.cat.active .cat-body {
+.cat.walking {
+    animation: walk 0.5s ease-in-out infinite;
+    transition: left 2s ease, bottom 2s ease;
+}
+
+.cat.surprise .cat-body {
     animation: spin 1s linear infinite;
+}
+
+.cat.spinning .cat-body {
+    animation: spin 0.5s linear infinite;
+}
+
+.cat.hangry {
+    animation: jump 0.3s ease-in-out infinite;
+    bottom: 35%;
+}
+
+.cat.hangry .cat-face::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: 5px;
+    width: 25px;
+    height: 3px;
+    background-color: #000;
+    transform: rotate(-20deg);
+}
+
+.cat.hangry .cat-face::after {
+    content: '';
+    position: absolute;
+    top: -5px;
+    right: 5px;
+    width: 25px;
+    height: 3px;
+    background-color: #000;
+    transform: rotate(20deg);
 }
 
 .cat.rest {
@@ -859,6 +910,12 @@ body {
 
 @keyframes moveAround {
     0%, 100% {
+        transform: translateX(-50%) translateY(0px) rotate(-5deg);
+    }
+    50% {
+        transform: translateX(-50%) translateY(0px) rotate(5deg);
+    }
+    0%, 100% {
         left: 20%;
         bottom: 35%;
     }
@@ -882,6 +939,24 @@ body {
     }
     50% {
         transform: translateX(-50%) translateY(0px) rotate(5deg);
+    }
+}
+
+@keyframes jump {
+    0%, 100% {
+        transform: translateX(-50%) translateY(0px);
+    }
+    50% {
+        transform: translateX(-50%) translateY(-20px);
+    }
+}
+
+@keyframes walk {
+    0%, 100% {
+        transform: translateX(-50%) translateY(0px) rotate(-3deg);
+    }
+    50% {
+        transform: translateX(-50%) translateY(-5px) rotate(3deg);
     }
 }
 
@@ -911,17 +986,14 @@ body {
 
 /* Speech Bubble */
 .speech-bubble {
-    position: relative;
-    top: 15%;
-    left: 50%;
-    transform: translateX(-50%);
+    position: absolute;
     background-color: #ffffff;
     padding: 15px 20px;
     border-radius: 20px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease, left 0.5s ease, bottom 0.5s ease;
     max-width: 300px;
     z-index: 100;
 }
@@ -1149,7 +1221,6 @@ body {
 
     /* Speech bubble adjustments */
     .speech-bubble {
-        top: 10%;
         max-width: 250px;
         padding: 12px 15px;
     }
@@ -1387,7 +1458,6 @@ body {
     .speech-bubble {
         max-width: 200px;
         padding: 10px 12px;
-        top: 8%;
     }
 
     .speech-text {

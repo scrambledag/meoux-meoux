@@ -7,6 +7,20 @@ const TIME_SLOTS = [
     { start: 22, end: 6 }    // Slot 5: 22:00-06:00 (wraps around)
 ];
 
+// Application state tracking
+const appState = {
+    foodBowlState: 'full', // 'full', 'half', 'empty'
+    emptySlotCount: 0, // How many consecutive slots bowl has been empty
+    isFloorClean: true,
+    lastSlot: 0,
+    currentMode: 'active',
+    previousMode: 'active', // Track mode before surprise
+    surpriseModeTimeout: null,
+    isSpinning: false,
+    catX: 50, // Cat position percentage
+    catY: 50
+};
+
 // Dialogue options for each slot
 const DIALOGUES = {
     1: [
@@ -62,11 +76,34 @@ function getCurrentTimeSlot() {
     return 1; // Default to slot 1
 }
 
-// Get cat mode based on time slot
+// Get cat mode based on time slot and probabilities
 function getCatMode(slot) {
-    if (slot === 1 || slot === 2) return 'active';
-    if (slot === 3 || slot === 4) return 'rest';
-    return 'sleep';
+    // Check for hangry mode first (overrides everything)
+    if (appState.emptySlotCount >= 2) {
+        return 'hangry';
+    }
+
+    // Mode probabilities for each slot
+    const probabilities = {
+        1: { active: 0.3, rest: 0.6, surprise: 0.1, sleep: 0 },
+        2: { active: 0.3, rest: 0.5, surprise: 0.2, sleep: 0 },
+        3: { active: 0.3, rest: 0.5, surprise: 0.2, sleep: 0 },
+        4: { active: 0.3, rest: 0.4, surprise: 0.2, sleep: 0.1 },
+        5: { active: 0, rest: 0, surprise: 0, sleep: 1 }
+    };
+
+    const slotProbs = probabilities[slot];
+    const rand = Math.random();
+
+    let cumulative = 0;
+    for (const [mode, prob] of Object.entries(slotProbs)) {
+        cumulative += prob;
+        if (rand <= cumulative) {
+            return mode;
+        }
+    }
+
+    return 'rest'; // Fallback
 }
 
 // Generate paw prints on floor
@@ -128,6 +165,35 @@ function generateSpilledFood() {
     }
 }
 
+// Update food bowl state on slot change
+function updateFoodBowlState() {
+    if (appState.foodBowlState === 'full') {
+        appState.foodBowlState = 'half';
+        appState.emptySlotCount = 0;
+    } else if (appState.foodBowlState === 'half') {
+        appState.foodBowlState = 'empty';
+        appState.emptySlotCount = 1;
+    } else if (appState.foodBowlState === 'empty') {
+        appState.emptySlotCount++;
+    }
+}
+
+// Check if paw prints and spilt food should be generated
+function shouldGenerateMessOnFloor() {
+    // Don't generate if cat is in sleep mode
+    if (appState.currentMode === 'sleep') {
+        return false;
+    }
+
+    // Don't generate if floor is clean and bowl is empty
+    if (appState.isFloorClean && appState.foodBowlState === 'empty') {
+        return false;
+    }
+
+    // Generate if floor is not clean (mess from eating remains visible)
+    return !appState.isFloorClean;
+}
+
 // Update scenery based on time slot
 function updateScenery(slot) {
     const room = document.querySelector('.room');
@@ -155,35 +221,45 @@ function updateScenery(slot) {
     if (cloud2) cloud2.style.display = 'none';
     if (stars) stars.style.display = 'none';
 
+    // Set food bowl based on state (not slot)
+    foodContent.classList.add(appState.foodBowlState);
+
+    // Set paw marks and spilled food visibility based on trigger logic
+    if (shouldGenerateMessOnFloor()) {
+        pawMarks.classList.add('visible');
+        spilledFood.classList.add('visible');
+        pawMarks.style.opacity = '1';
+        spilledFood.style.opacity = '1';
+    }
+
     if (slot === 1 || slot === 2) {
-        // Slots 1,2: Bright, lamp off, full bowl, clean floor, sunny
+        // Slots 1,2: Bright, lamp off, sunny
         room.classList.add('bright');
         windowView.classList.add('sunny');
-        foodContent.classList.add('full');
         lampShade.classList.add('day');
         // Show clouds for sunny view
         if (cloud1) cloud1.style.display = 'block';
         if (cloud2) cloud2.style.display = 'block';
     } else if (slot === 3 || slot === 4) {
-        // Slots 3,4: Dimmer, lamp on, half bowl, paw marks and spilled food, sunset
+        // Slots 3,4: Dimmer, lamp on, sunset or early evening
         room.classList.add('dim');
-        windowView.classList.add('sunset');
+        windowView.classList.add(slot === 3 ? 'sunset' : 'night');
         lampShade.classList.add('on');
-        foodContent.classList.add('half');
-        pawMarks.classList.add('visible');
-        spilledFood.classList.add('visible');
-        // Show sun and clouds for sunset view
-        if (sunsetSun) sunsetSun.style.display = 'block';
-        if (cloud1) cloud1.style.display = 'block';
-        if (cloud2) cloud2.style.display = 'block';
+
+        if (slot === 3) {
+            // Show sun and clouds for sunset view
+            if (sunsetSun) sunsetSun.style.display = 'block';
+            if (cloud1) cloud1.style.display = 'block';
+            if (cloud2) cloud2.style.display = 'block';
+        } else {
+            // Show stars for night view
+            if (stars) stars.style.display = 'block';
+        }
     } else {
-        // Slot 5: Very dim, lamp off (but visible with dull grey), empty bowl, messy floor, night
+        // Slot 5: Very dim, lamp off (but visible with dull grey), night
         room.classList.add('dark');
         windowView.classList.add('night');
         lampShade.classList.add('night');
-        foodContent.classList.add('empty');
-        pawMarks.classList.add('visible');
-        spilledFood.classList.add('visible');
         // Show stars for night view
         if (stars) stars.style.display = 'block';
     }
@@ -193,12 +269,53 @@ function updateScenery(slot) {
 function updateCatMode(slot) {
     const cat = document.getElementById('cat');
     const mode = getCatMode(slot);
-    
+
+    // Save previous mode before switching (but not if current is already surprise)
+    if (appState.currentMode !== 'surprise') {
+        appState.previousMode = appState.currentMode;
+    }
+
+    appState.currentMode = mode;
+
     // Remove all mode classes
-    cat.classList.remove('active', 'rest', 'sleep', 'interacting');
-    
+    cat.classList.remove('active', 'rest', 'sleep', 'interacting', 'hangry', 'surprise', 'spinning');
+
     // Add appropriate mode class
     cat.classList.add(mode);
+
+    // Handle surprise mode timeout
+    if (mode === 'surprise') {
+        // Play oiia-oiia sound
+        const audio = new Audio('oiia-oiia-sound.mp3');
+        audio.play().catch(error => console.log('Audio playback failed:', error));
+
+        // Switch back to previous mode after 6 seconds
+        if (appState.surpriseModeTimeout) {
+            clearTimeout(appState.surpriseModeTimeout);
+        }
+        appState.surpriseModeTimeout = setTimeout(() => {
+            appState.currentMode = appState.previousMode;
+            cat.classList.remove('surprise');
+            cat.classList.add(appState.previousMode);
+        }, 6000);
+    }
+
+    // Show "Play with me!" message in active mode
+    if (mode === 'active') {
+        setTimeout(() => {
+            const speechBubble = document.getElementById('speechBubble');
+            const speechText = document.getElementById('speechText');
+            speechText.textContent = "Play with me!";
+            speechBubble.classList.add('visible');
+
+            const audio = new Audio('meow_sound.mp3');
+            audio.play().catch(error => console.log('Audio playback failed:', error));
+
+            setTimeout(() => {
+                speechBubble.classList.remove('visible');
+            }, 3000);
+        }, 1000);
+    }
 }
 
 // Play sound based on time slot
@@ -227,10 +344,24 @@ function showDialogue(slot) {
     const randomDialogue = dialogues[Math.floor(Math.random() * dialogues.length)];
     const speechBubble = document.getElementById('speechBubble');
     const speechText = document.getElementById('speechText');
-    
+    const cat = document.getElementById('cat');
+
+    // Get cat's current position
+    const catRect = cat.getBoundingClientRect();
+    const room = document.querySelector('.room');
+    const roomRect = room.getBoundingClientRect();
+
+    // Position bubble above the cat
+    const bubbleLeft = ((catRect.left + catRect.width / 2 - roomRect.left) / roomRect.width) * 100;
+    const bubbleBottom = ((roomRect.bottom - catRect.top + 20) / roomRect.height) * 100; // 20px above cat
+
+    speechBubble.style.left = bubbleLeft + '%';
+    speechBubble.style.bottom = bubbleBottom + '%';
+    speechBubble.style.transform = 'translateX(-50%)';
+
     speechText.textContent = randomDialogue;
     speechBubble.classList.add('visible');
-    
+
     // Hide after 5 seconds
     setTimeout(() => {
         speechBubble.classList.remove('visible');
@@ -243,6 +374,9 @@ function cleanRoom(event) {
     const broom = document.getElementById('broom');
     const pawMarks = document.getElementById('pawMarks');
     const spilledFood = document.getElementById('spilledFood');
+
+    // Update state
+    appState.isFloorClean = true;
 
     // Add cleaning animation
     broom.classList.add('cleaning');
@@ -269,49 +403,160 @@ function cleanRoom(event) {
 function fillFoodBowl(event) {
     event.stopPropagation();
     const foodContent = document.getElementById('foodContent');
+    const cat = document.getElementById('cat');
+
+    // Update state
+    appState.foodBowlState = 'full';
+    appState.emptySlotCount = 0;
+    appState.isFloorClean = false; // Bowl is full, cat will make mess again
 
     if (foodContent) {
         foodContent.className = 'food-content';
         foodContent.classList.add('full');
     }
+
+    // If cat was hangry, switch to active mode
+    if (appState.currentMode === 'hangry') {
+        appState.currentMode = 'active';
+        cat.classList.remove('hangry');
+        cat.classList.add('active');
+    }
+}
+
+// Move cat towards click position
+function moveCatToClick(event) {
+    const cat = document.getElementById('cat');
+    const room = document.querySelector('.room');
+    const rect = room.getBoundingClientRect();
+
+    // Calculate click position as percentage
+    const clickX = ((event.clientX - rect.left) / rect.width) * 100;
+    const clickY = ((event.clientY - rect.top) / rect.height) * 100;
+
+    // Calculate bottom position (invert Y because CSS bottom is measured from bottom)
+    const bottomPos = 100 - clickY;
+
+    // Update cat position (constrain within reasonable bounds)
+    appState.catX = Math.max(10, Math.min(90, clickX));
+    appState.catY = Math.max(10, Math.min(90, bottomPos));
+
+    // Add walking animation while moving
+    cat.classList.remove('active');
+    cat.classList.add('walking');
+
+    cat.style.left = appState.catX + '%';
+    cat.style.bottom = appState.catY + '%';
+
+    // Remove walking animation and restore active after movement completes (2 seconds)
+    setTimeout(() => {
+        cat.classList.remove('walking');
+        cat.classList.add('active');
+    }, 2000);
+}
+
+// Check if click is on the cat
+function isClickOnCat(event) {
+    const cat = document.getElementById('cat');
+    const rect = cat.getBoundingClientRect();
+
+    return (
+        event.clientX >= rect.left &&
+        event.clientX <= rect.right &&
+        event.clientY >= rect.top &&
+        event.clientY <= rect.bottom
+    );
 }
 
 // Handle user click interaction
 function handleClick(event) {
     const slot = getCurrentTimeSlot();
     const cat = document.getElementById('cat');
-    const mode = getCatMode(slot);
 
-    // Play sound based on slot
-    playSound(slot);
-    
-    // Handle interaction based on slot
-    if (slot === 1 || slot === 2) {
-        // Stop spinning, come front and center
-        cat.classList.remove('active');
-        cat.classList.add('interacting');
+    // Hangry mode overrides everything
+    if (appState.currentMode === 'hangry') {
+        const speechBubble = document.getElementById('speechBubble');
+        const speechText = document.getElementById('speechText');
+        speechText.textContent = "FEED ME BISH";
+        speechBubble.classList.add('visible');
+
+        const audio = new Audio('meow_sound.mp3');
+        audio.play().catch(error => console.log('Audio playback failed:', error));
+
         setTimeout(() => {
-            cat.classList.remove('interacting');
-            cat.classList.add('active');
+            speechBubble.classList.remove('visible');
         }, 5000);
-    } else if (slot === 3 || slot === 4) {
-        // Come front and center
-        cat.classList.add('interacting');
-        setTimeout(() => {
-            cat.classList.remove('interacting');
-        }, 5000);
-    } else {
-        // Slot 5: Don't move, just meow
-        // Cat stays in sleep mode
+        return;
     }
+
+    // Determine if this triggers dialogue or surprise mode (0.9 vs 0.1)
+    const rand = Math.random();
+
+    if (rand > 0.1) {
+        // 90% chance: Show dialogue
+        playSound(slot);
+        showDialogue(slot);
+
+        // If in active mode, move cat to click position
+        if (appState.currentMode === 'active') {
+            moveCatToClick(event);
+        }
+
+        // Come front and center for other modes
+        if (appState.currentMode === 'rest') {
+            cat.classList.add('interacting');
+            setTimeout(() => {
+                cat.classList.remove('interacting');
+            }, 5000);
+        }
     
-    // Show dialogue
-    showDialogue(slot);
+    } else {
+        // 10% chance: Trigger surprise mode
+        // Save current mode before switching to surprise
+        appState.previousMode = appState.currentMode;
+
+        cat.classList.remove('active', 'rest', 'sleep', 'hangry');
+        cat.classList.add('surprise');
+        appState.currentMode = 'surprise';
+
+        const audio = new Audio('oiia-oiia-sound.mp3');
+        audio.play().catch(error => console.log('Audio playback failed:', error));
+
+        // Switch back to previous mode after 6 seconds
+        if (appState.surpriseModeTimeout) {
+            clearTimeout(appState.surpriseModeTimeout);
+        }
+        appState.surpriseModeTimeout = setTimeout(() => {
+            appState.currentMode = appState.previousMode;
+            cat.classList.remove('surprise');
+            cat.classList.add(appState.previousMode);
+        }, 6000);
+    }
+}
+
+// Handle mouse down on cat (start spinning)
+function handleCatMouseDown(event) {
+    event.stopPropagation();
+
+    if (appState.currentMode === 'active') {
+        const cat = document.getElementById('cat');
+        cat.classList.add('spinning');
+        appState.isSpinning = true;
+    }
+}
+
+// Handle mouse up anywhere (stop spinning)
+function handleMouseUp(event) {
+    if (appState.isSpinning) {
+        const cat = document.getElementById('cat');
+        cat.classList.remove('spinning');
+        appState.isSpinning = false;
+    }
 }
 
 // Initialize the app
 function init() {
     const slot = getCurrentTimeSlot();
+    appState.lastSlot = slot;
 
     // Generate floor elements
     generatePawPrints();
@@ -326,6 +571,9 @@ function init() {
     // Add click event listener
     document.addEventListener('click', handleClick);
 
+    // Add mouse up event listener for spinning
+    document.addEventListener('mouseup', handleMouseUp);
+
     // Add broom click event listener
     const broom = document.getElementById('broom');
     if (broom) {
@@ -338,14 +586,25 @@ function init() {
         foodBowl.addEventListener('click', fillFoodBowl);
     }
 
+    // Add cat mouse down event listener
+    const cat = document.getElementById('cat');
+    if (cat) {
+        cat.addEventListener('mousedown', handleCatMouseDown);
+    }
+
     // Update every minute to check for time slot changes
     setInterval(() => {
         const newSlot = getCurrentTimeSlot();
-        const currentSlot = getCurrentTimeSlot();
 
-        if (newSlot !== currentSlot) {
+        if (newSlot !== appState.lastSlot) {
+            // Slot changed, update food bowl state
+            updateFoodBowlState();
+
+            // Update scenery and cat mode
             updateScenery(newSlot);
             updateCatMode(newSlot);
+
+            appState.lastSlot = newSlot;
         }
     }, 60000);
 }
