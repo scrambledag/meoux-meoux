@@ -1147,6 +1147,16 @@ body {
         height: 50px;
     }
 
+    .ear.left {
+        left: 5px;
+        transform: rotate(-30deg);
+    }
+
+    .ear.right {
+        left: 5px;
+        transform: rotate(30deg);
+    }
+
     .eye.left {
         left: 5px;
         transform: rotate(-10deg);
