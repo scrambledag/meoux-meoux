@@ -24,34 +24,29 @@ const appState = {
 // Dialogue options for each slot
 const DIALOGUES = {
     1: [
-        "You the pookiest 25 year old to have ever pookied. Happy birthday pookie! ❤️"
-        // "Good morning pookie, have a nice day. I love you ❤️",
-        // "Good morning hunny, take a kissy to start yo day, I love you 💋",
-        // "Good morning qt, hope you ept well. I love you ❤️"
+        "Good morning pookie, have a nice day. I love you ❤️",
+        "Good morning hunny, take a kissy to start yo day, I love you 💋",
+        "Good morning qt, hope you ept well. I love you ❤️"
     ],
     2: [
-        "Looking mighty pretty. Leo Di Caprio crying and throwing up rn."
-        // "Hope you had a good poop today qt",
-        // "I can hear the mimir rising in you, time for a nap",
-        // "Looking mighty cute today 💋"
+        "Hope you had a good poop today qt",
+        "I can hear the mimir rising in you, time for a nap",
+        "Looking mighty cute today 💋"
     ],
     3: [
-        "Lezz be tippy, legally muhehehe"
-        // "Sup pookie? Momo misses you",
-        // "Drink some water qt, mah hydrated moisturized unbothered girl boss",
-        // "Smile please silly goofy 😊"
+        "Sup pookie? Momo misses you",
+        "Drink some water qt, mah hydrated moisturized unbothered girl boss",
+        "Smile please silly goofy 😊"
     ],
     4: [
-        "You still 24.. 24/7 in mah heart 💋"
-        // "Hope you had a nice day hunny, goodnight, I love you ❤️",
-        // "Goodnight hunny, I love you, take kith muah 💋",
-        // "You did good today, I'm proud of you qt! Goodnight, I love you ❤️"
+        "Hope you had a nice day hunny, goodnight, I love you ❤️",
+        "Goodnight hunny, I love you, take kith muah 💋",
+        "You did good today, I'm proud of you qt! Goodnight, I love you ❤️"
     ],
     5: [
-        "Time to eep grandma"
-        // "Let me sleep ho",
-        // "Dreamin about you right now",
-        // "Eepy teepy silly billy"
+        "Let me sleep ho",
+        "Dreamin about you right now",
+        "Eepy teepy silly billy"
     ]
 };
 
