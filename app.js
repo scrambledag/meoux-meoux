@@ -24,29 +24,34 @@ const appState = {
 // Dialogue options for each slot
 const DIALOGUES = {
     1: [
-        "Good morning pookie, have a nice day. I love you ❤️",
-        "Good morning hunny, take a kissy to start yo day, I love you 💋",
-        "Good morning qt, hope you ept well. I love you ❤️"
+        "You the pookiest 25 year old to have ever pookied. Happy birthday pookie! ❤️"
+        // "Good morning pookie, have a nice day. I love you ❤️",
+        // "Good morning hunny, take a kissy to start yo day, I love you 💋",
+        // "Good morning qt, hope you ept well. I love you ❤️"
     ],
     2: [
-        "Hope you had a good poop today qt",
-        "I can hear the mimir rising in you, time for a nap",
-        "Looking mighty cute today 💋"
+        "Looking mighty pretty. Leo Di Caprio crying and throwing up rn."
+        // "Hope you had a good poop today qt",
+        // "I can hear the mimir rising in you, time for a nap",
+        // "Looking mighty cute today 💋"
     ],
     3: [
-        "Sup pookie? Momo misses you",
-        "Drink some water qt, mah hydrated moisturized unbothered girl boss",
-        "Smile please silly goofy 😊"
+        "Lezz be tippy, legally muhehehe"
+        // "Sup pookie? Momo misses you",
+        // "Drink some water qt, mah hydrated moisturized unbothered girl boss",
+        // "Smile please silly goofy 😊"
     ],
     4: [
-        "Hope you had a nice day hunny, goodnight, I love you ❤️",
-        "Goodnight hunny, I love you, take kith muah 💋",
-        "You did good today, I'm proud of you qt! Goodnight, I love you ❤️"
+        "You still 24.. 24/7 in mah heart 💋"
+        // "Hope you had a nice day hunny, goodnight, I love you ❤️",
+        // "Goodnight hunny, I love you, take kith muah 💋",
+        // "You did good today, I'm proud of you qt! Goodnight, I love you ❤️"
     ],
     5: [
-        "Let me sleep ho",
-        "Dreamin about you right now",
-        "Eepy teepy silly billy"
+        "Time to eep grandma"
+        // "Let me sleep ho",
+        // "Dreamin about you right now",
+        // "Eepy teepy silly billy"
     ]
 };
 
@@ -324,7 +329,7 @@ function playSound(slot) {
 
     if (slot === 1 || slot === 2) {
         // Slots 1,2: Play oiia-oiia sound
-        audio = new Audio('oiia-oiia-sound.mp3');
+        audio = new Audio('meow_sound.mp3');
     } else if (slot === 3 || slot === 4) {
         // Slots 3,4: Play meow sound
         audio = new Audio('meow_sound.mp3');
