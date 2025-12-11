@@ -29,9 +29,10 @@ const DIALOGUES = {
         "Good morning qt, hope you ept well. I love you ❤️"
     ],
     2: [
-        "Hope you had a good poop today qt",
-        "I can hear the mimir rising in you, time for a nap",
-        "Looking mighty cute today 💋"
+        // "Hope you had a good poop today qt",
+        // "I can hear the mimir rising in you, time for a nap",
+        // "Looking mighty cute today 💋"
+        "All da besticle for da nexsales testicle qt"
     ],
     3: [
         "Sup pookie? Momo misses you",
