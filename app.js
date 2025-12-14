@@ -37,7 +37,8 @@ const DIALOGUES = {
     3: [
         "Sup pookie? Momo misses you",
         "Drink some water qt, mah hydrated moisturized unbothered girl boss",
-        "Smile please silly goofy 😊"
+        "Smile please silly goofy 😊",
+        "Congrats on getting placed pookie, Nexcellent achievement! ❤️"
     ],
     4: [
         "Hope you had a nice day hunny, goodnight, I love you ❤️",
